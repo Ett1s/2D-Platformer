@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEditorInternal;
 using UnityEngine;
 
-public class Hero : MonoBehaviour
+public class Hero : Sounds
 {
     [SerializeField] private float speed = 3f; //Скорость персонажа
     [SerializeField] private int lives = 5; // Жизни персонажа

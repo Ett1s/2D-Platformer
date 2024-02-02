@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Hero : Sounds
 {
-    [SerializeField] private float speed = 3f; //Скорость персонажа
+    [SerializeField] private float speed = 2.5f; //Скорость персонажа
     [SerializeField] private int lives = 5; // Жизни персонажа
     [SerializeField] private float jumpForce = 6f; //Сила прыжка персонажа
     private bool isGrounded = false;

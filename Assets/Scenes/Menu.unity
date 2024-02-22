@@ -135,6 +135,7 @@ GameObject:
   - component: {fileID: 87379792}
   - component: {fileID: 87379791}
   - component: {fileID: 87379790}
+  - component: {fileID: 87379793}
   m_Layer: 5
   m_Name: Settings
   m_TagString: Untagged
@@ -158,8 +159,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 45.299, y: -373.2777}
-  m_SizeDelta: {x: 514.06, y: 113.3557}
+  m_AnchoredPosition: {x: 43.998875, y: -371.8301}
+  m_SizeDelta: {x: 576.718, y: 149.0586}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &87379790
 MonoBehaviour:
@@ -243,6 +244,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 87379788}
   m_CullTransparentMesh: 1
+--- !u!114 &87379793
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 87379788}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 24ba54505a64ccb43a00971a34d27446, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hoverScale: 1.1
+  hoverDuration: 0.2
 --- !u!1 &222729340
 GameObject:
   m_ObjectHideFlags: 0
@@ -361,6 +376,7 @@ GameObject:
   - component: {fileID: 838281327}
   - component: {fileID: 838281326}
   - component: {fileID: 838281325}
+  - component: {fileID: 838281328}
   m_Layer: 5
   m_Name: Continue
   m_TagString: Untagged
@@ -384,8 +400,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 45.3, y: -235}
-  m_SizeDelta: {x: 514.06, y: 116.9297}
+  m_AnchoredPosition: {x: 44, y: -190}
+  m_SizeDelta: {x: 576.718, y: 153.7583}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &838281325
 MonoBehaviour:
@@ -469,6 +485,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 838281323}
   m_CullTransparentMesh: 1
+--- !u!114 &838281328
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 838281323}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 24ba54505a64ccb43a00971a34d27446, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hoverScale: 1.1
+  hoverDuration: 0.2
 --- !u!1 &897786235
 GameObject:
   m_ObjectHideFlags: 0
@@ -549,6 +579,7 @@ GameObject:
   - component: {fileID: 1204242993}
   - component: {fileID: 1204242992}
   - component: {fileID: 1204242991}
+  - component: {fileID: 1204242994}
   m_Layer: 5
   m_Name: Exit
   m_TagString: Untagged
@@ -572,8 +603,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 45.3, y: -437.4634}
-  m_SizeDelta: {x: 514.06, y: 110.238}
+  m_AnchoredPosition: {x: 44.00001, y: -456.232}
+  m_SizeDelta: {x: 576.718, y: 144.9589}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1204242991
 MonoBehaviour:
@@ -657,6 +688,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1204242989}
   m_CullTransparentMesh: 1
+--- !u!114 &1204242994
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1204242989}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 24ba54505a64ccb43a00971a34d27446, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hoverScale: 1.1
+  hoverDuration: 0.2
 --- !u!1 &1595884784
 GameObject:
   m_ObjectHideFlags: 0
@@ -745,7 +790,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 1b4585b39cb34c94a9a4def636998cd9, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -933,6 +978,7 @@ GameObject:
   - component: {fileID: 2131038719}
   - component: {fileID: 2131038718}
   - component: {fileID: 2131038717}
+  - component: {fileID: 2131038720}
   m_Layer: 5
   m_Name: NewGame
   m_TagString: Untagged
@@ -956,8 +1002,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 45.3, y: -307.0848}
-  m_SizeDelta: {x: 514.0586, y: 113.28}
+  m_AnchoredPosition: {x: 44.00001, y: -284.78888}
+  m_SizeDelta: {x: 576.7164, y: 148.9591}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2131038717
 MonoBehaviour:
@@ -1041,10 +1087,24 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2131038715}
   m_CullTransparentMesh: 1
+--- !u!114 &2131038720
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2131038715}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 24ba54505a64ccb43a00971a34d27446, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hoverScale: 1.1
+  hoverDuration: 0.2
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 2043682198}
-  - {fileID: 222729344}
   - {fileID: 897786238}
+  - {fileID: 222729344}

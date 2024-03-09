@@ -22,6 +22,6 @@ public class TriggerShakeAndLoadScene : MonoBehaviour
     IEnumerator LoadSceneAfterFadeIn(float delay)
     {
         yield return new WaitForSeconds(delay);
-        SceneManager.LoadScene(3);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 }

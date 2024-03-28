@@ -20,4 +20,16 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Firtslevel.unity
     guid: 2cda990e2423bbf4892e6590ba056729
+  - enabled: 1
+    path: Assets/Scenes/Loading_3.unity
+    guid: 242977c49a44f984b814f62851681690
+  - enabled: 1
+    path: Assets/Scenes/SecondLevel.unity
+    guid: e74c316c5459d5c41a8d60e79e01929a
+  - enabled: 1
+    path: Assets/Scenes/loading_4.unity
+    guid: 992e4d7d79f335d44b6ab1bdf833203e
+  - enabled: 1
+    path: "Assets/Scenes/3 \u041B\u041E\u041A\u0410\u0426\u0418\u042F.unity"
+    guid: 3ad5679f653b4dd43bdd88a0c3778036
   m_configObjects: {}

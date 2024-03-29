@@ -8,10 +8,11 @@ public class ControllerHeropicsel : MonoBehaviour
     private Animator animator;
     private SpriteRenderer sprite;
     private Rigidbody2D rb;
-    [SerializeField]private float moveSpeed = 5f;
-    [SerializeField]private float runSpeed = 10f;
-    [SerializeField]private float jumpForce = 7f;
+    [SerializeField] private float moveSpeed = 5f;
+    [SerializeField] private float runSpeed = 10f;
+    [SerializeField] private float jumpForce = 7f;
     private bool isGrounded = false;
+    private int enemyHitCount = 0; // Track enemy hit count
 
     void Start()
     {
@@ -49,8 +50,8 @@ public class ControllerHeropicsel : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             animator.SetBool("attack", true);
+            enemyHitCount++; // Increment hit count on attack
         }
-
     }
 
     void OnCollisionEnter2D(Collision2D collision)
@@ -58,6 +59,33 @@ public class ControllerHeropicsel : MonoBehaviour
         if (collision.gameObject.CompareTag("Ground"))
         {
             isGrounded = true;
+            enemyHitCount = 0; // Reset hit count on ground touch (optional)
         }
+        else if (collision.gameObject.CompareTag("Enemy") && enemyHitCount >= 2)
+        {
+            // Trigger enemy death animation
+            Animator enemyAnimator = collision.gameObject.GetComponent<Animator>();
+            if (enemyAnimator != null) // Check if enemy has animator
+            {
+                enemyAnimator.SetTrigger("Death");
+
+                // Disable enemy movement (if needed)
+                collision.gameObject.GetComponent<Rigidbody2D>().isKinematic = true;
+
+                // Destroy enemy after 2 seconds
+                StartCoroutine(DestroyEnemy(collision.gameObject, 2f));
+            }
+            else
+            {
+                Debug.LogWarning("Enemy missing Animator component. Death animation cannot be triggered.");
+            }
+            enemyHitCount = 0; // Reset hit count after kill
+        }
+    }
+
+    IEnumerator DestroyEnemy(GameObject enemy, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        Destroy(enemy);
     }
 }

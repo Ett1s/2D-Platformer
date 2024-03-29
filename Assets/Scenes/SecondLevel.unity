@@ -20231,7 +20231,7 @@ GameObject:
   - component: {fileID: 881599575}
   m_Layer: 0
   m_Name: Skeleton
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -20297,7 +20297,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!61 &881599578
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -20363,7 +20363,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 68303e1b5bc73c845b9cc760c1c71788, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -20404,8 +20404,8 @@ Transform:
   m_GameObject: {fileID: 881599574}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 24.7947, y: 3.6741, z: -0.3091379}
-  m_LocalScale: {x: 3.858418, y: 4.0954967, z: 1}
+  m_LocalPosition: {x: 25.1431, y: 3.7669, z: -0.3091379}
+  m_LocalScale: {x: 4.17558, y: 4.589004, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -33490,7 +33490,7 @@ Transform:
   m_GameObject: {fileID: 1562704935}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5.1409783, y: -0.12783778, z: -10.03709}
+  m_LocalPosition: {x: -1.1062675, y: -0.32789147, z: -10.03709}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

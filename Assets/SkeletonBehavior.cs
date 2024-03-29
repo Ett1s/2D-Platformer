@@ -22,6 +22,7 @@ public class SkeletonBehavior : MonoBehaviour
     void Update()
     {
         animator.SetBool("attack", false);
+        animator.SetBool("walk", false);
 
         // Check distance to player
         float distanceToPlayer = Vector2.Distance(transform.position, player.transform.position);
@@ -35,6 +36,7 @@ public class SkeletonBehavior : MonoBehaviour
 
         if (distanceToPlayer <= 5f) // Start moving towards player if within 5 units
         {
+            animator.SetBool("walk", true);
             // Move towards player
             Vector3 direction = player.transform.position - transform.position;
             direction.Normalize();

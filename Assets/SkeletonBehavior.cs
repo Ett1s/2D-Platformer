@@ -10,9 +10,9 @@ public class SkeletonBehavior : MonoBehaviour
     [SerializeField] private float moveSpeed = 3f;
     [SerializeField] private float attackRange = 10f;
     private GameObject player;
-    private int playerHitCount = 0; // Track player hit count
-    private float deathTimer = 0f; // Timer for death animation
-    private bool isPlayerDead = false; // Flag to track player death
+
+    [SerializeField] public int maxHealth = 2;
+    private int currentHealth;
 
     void Start()
     {
@@ -20,6 +20,7 @@ public class SkeletonBehavior : MonoBehaviour
         sprite = GetComponentInChildren<SpriteRenderer>();
         rb = GetComponent<Rigidbody2D>();
         player = GameObject.FindGameObjectWithTag("Player");
+        currentHealth = maxHealth; // Initialize health
     }
 
     void Update()
@@ -30,13 +31,13 @@ public class SkeletonBehavior : MonoBehaviour
         // Check distance to player
         float distanceToPlayer = Vector2.Distance(transform.position, player.transform.position);
 
-        if (!isPlayerDead && distanceToPlayer <= attackRange) // Attack only if player is alive
+        if (distanceToPlayer <= attackRange) // Attack only if player is alive
         {
             // Attack player
             animator.SetBool("attack", true);
         }
 
-        if (!isPlayerDead && distanceToPlayer <= 5f) // Move only if player is alive
+        if (distanceToPlayer <= 5f) // Move only if player is alive
         {
             animator.SetBool("walk", true);
             // Move towards player
@@ -46,40 +47,30 @@ public class SkeletonBehavior : MonoBehaviour
             // Flip sprite based on direction
             sprite.flipX = direction.x < 0.0f;
         }
+    }
 
-        // Handle death animation and disappearance
-        if (deathTimer > 0f)
+
+    public void TakeDamage(int damage)
+    {
+        currentHealth -= damage;
+        Debug.Log("Skeleton Damage received. Current health: " + currentHealth);
+
+        if (currentHealth <= 0)
         {
-            deathTimer -= Time.deltaTime;
-            if (deathTimer <= 0f)
-            {
-                Destroy(gameObject);
-            }
+            // Play death animation
+            animator.SetTrigger("Death");
+
+            // Disable movement
+            GetComponent<Rigidbody2D>().isKinematic = true;
+
+            // Destroy player after a delay (optional)
+            StartCoroutine(DestroyEnemy(2f));
         }
     }
 
-    void OnCollisionEnter2D(Collision2D collision)
+    IEnumerator DestroyEnemy(float delay) // Uncomment if you want to destroy the player
     {
-        if (collision.gameObject.CompareTag("Player"))
-        {
-            // Player hit
-            playerHitCount++;
-
-            if (playerHitCount >= 5)
-            {
-                // Kill player on 5th hit
-                Animator playerAnimator = collision.gameObject.GetComponent<Animator>();
-                playerAnimator.SetTrigger("Death");
-
-                // Disable player movement immediately
-                GetComponent<Rigidbody2D>().isKinematic = true;
-
-                // Set player dead flag
-                isPlayerDead = true;
-
-                // Destroy player after 2 seconds (optional)
-                Destroy(collision.gameObject, 2f);  // You can uncomment this if you want the player to disappear as well
-            }
-        }
+        yield return new WaitForSeconds(delay);
+        Destroy(gameObject);
     }
 }

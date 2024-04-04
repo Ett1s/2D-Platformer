@@ -9,7 +9,13 @@ public class SkeletonBehavior : MonoBehaviour
     private Rigidbody2D rb;
     [SerializeField] private float moveSpeed = 3f;
     [SerializeField] private float attackRange = 10f;
+    [SerializeField] private float attackRadius = 10f;
+    [SerializeField] private AudioClip attackSound;
+    [SerializeField] public AudioClip deathSound;
+    [SerializeField] private AudioClip walkStepSound;
+    private Coroutine attackSoundCoroutine;
     private GameObject player;
+    private AudioSource audioSource;
 
     [SerializeField] public int maxHealth = 2;
     private int currentHealth;
@@ -25,19 +31,40 @@ public class SkeletonBehavior : MonoBehaviour
 
     void Update()
     {
+        if (currentHealth <= 0) return; // Don't do anything if dead
+
         animator.SetBool("attack", false);
         animator.SetBool("walk", false);
 
         // Check distance to player
         float distanceToPlayer = Vector2.Distance(transform.position, player.transform.position);
 
-        if (distanceToPlayer <= attackRange) // Attack only if player is alive
+        if (distanceToPlayer <= attackRange)
         {
             // Attack player
             animator.SetBool("attack", true);
+            if (attackSoundCoroutine == null)
+            {
+                attackSoundCoroutine = StartCoroutine(PlayAttackSound());
+            }
+            Collider2D playerCollider = Physics2D.OverlapCircle(transform.position, attackRadius, LayerMask.GetMask("Player"));
+            if (playerCollider != null)
+            {
+                ApplyDamageToPlayer();
+            }
+        }
+        else
+        {
+            // Конец атаки
+            animator.SetBool("attack", false);
+            if (attackSoundCoroutine != null)
+            {
+                StopCoroutine(attackSoundCoroutine);
+                attackSoundCoroutine = null;
+            }
         }
 
-        if (distanceToPlayer <= 5f) // Move only if player is alive
+        if (distanceToPlayer <= 5f)
         {
             animator.SetBool("walk", true);
             // Move towards player
@@ -49,6 +76,15 @@ public class SkeletonBehavior : MonoBehaviour
         }
     }
 
+    private void ApplyDamageToPlayer()
+    {
+        ControllerHeropicsel playerScript = player.GetComponent<ControllerHeropicsel>();
+        if (playerScript != null)
+        {
+            playerScript.TakeDamage(1); // Deal damage to the player
+            Debug.Log("Skeleton dealt damage to player!"); // For debugging
+        }
+    }
 
     public void TakeDamage(int damage)
     {
@@ -60,17 +96,43 @@ public class SkeletonBehavior : MonoBehaviour
             // Play death animation
             animator.SetTrigger("Death");
 
-            // Disable movement
-            GetComponent<Rigidbody2D>().isKinematic = true;
+            // Play death sound
+            if (deathSound != null)
+            {
+                AudioSource.PlayClipAtPoint(deathSound, transform.position); // Play the sound at the character's position
+            }
 
-            // Destroy player after a delay (optional)
+            // Disable movement and collision
+            rb.isKinematic = true;
+            GetComponent<Collider2D>().enabled = false;
+
+            // Destroy after a delay (optional)
             StartCoroutine(DestroyEnemy(2f));
         }
     }
+    public void PlayWalkStepSound()
+    {
+        if (walkStepSound != null)
+        {
+            AudioSource.PlayClipAtPoint(walkStepSound, transform.position);
+        }
+    }
 
-    IEnumerator DestroyEnemy(float delay) // Uncomment if you want to destroy the player
+    IEnumerator DestroyEnemy(float delay)
     {
         yield return new WaitForSeconds(delay);
         Destroy(gameObject);
+    }
+
+    IEnumerator PlayAttackSound()
+    {
+        while (animator.GetBool("attack"))
+        {
+            if (attackSound != null)
+            {
+                AudioSource.PlayClipAtPoint(attackSound, transform.position);
+            }
+            yield return new WaitForSeconds(1f); // Задержка в 1 секунду
+        }
     }
 }

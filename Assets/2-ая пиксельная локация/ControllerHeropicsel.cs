@@ -8,31 +8,27 @@ public class ControllerHeropicsel : MonoBehaviour
     private Animator animator;
     private SpriteRenderer sprite;
     private Rigidbody2D rb;
-    private Collision2D collision;
     [SerializeField] private float moveSpeed = 5f;
     [SerializeField] private float runSpeed = 10f;
     [SerializeField] private float jumpForce = 7f;
+    [SerializeField] private AudioClip attackSound;
     private bool isGrounded = false;
-    private bool isTakingDamage = false;
-
-    private GameObject enemy;
 
     // Health variables
     [SerializeField] public int maxHealth = 5;
     private int currentHealth;
 
-    // Attack delay variables
+    // Attack variables
     private bool isAttacking = false;
     [SerializeField] private float attackDelay = 0.5f;
-    [SerializeField] private float damageDelay = 1f;
+    [SerializeField] private float attackRadius = 1f; // Adjust as needed
 
     void Start()
     {
         animator = GetComponent<Animator>();
         sprite = GetComponentInChildren<SpriteRenderer>();
         rb = GetComponent<Rigidbody2D>();
-        enemy = GameObject.FindGameObjectWithTag("Enemy");
-        
+
         currentHealth = maxHealth; // Initialize health
     }
 
@@ -67,12 +63,24 @@ public class ControllerHeropicsel : MonoBehaviour
             isAttacking = true;
             animator.SetBool("attack", true);
 
+            if (attackSound != null)
+            {
+                AudioSource.PlayClipAtPoint(attackSound, transform.position); // Play the sound at the character's position
+            }
+
             // Check for collision with enemy during attack
-            //if (collision != null && collision.gameObject.CompareTag("Enemy"))
-            //{
-            //    SkeletonBehavior enemyScript = collision.gameObject.GetComponent<SkeletonBehavior>();
-            //    enemyScript.TakeDamage(1); // Call TakeDamage on the enemy
-            //}
+            Collider2D[] enemiesHit = Physics2D.OverlapCircleAll(transform.position, attackRadius);
+            foreach (Collider2D enemyCollider in enemiesHit)
+            {
+                if (enemyCollider.CompareTag("Enemy"))
+                {
+                    SkeletonBehavior enemyScript = enemyCollider.GetComponent<SkeletonBehavior>();
+                    if (enemyScript != null)
+                    {
+                        enemyScript.TakeDamage(1); // Deal damage to the enemy
+                    }
+                }
+            }
 
             StartCoroutine(AttackDelay());
         }
@@ -80,57 +88,9 @@ public class ControllerHeropicsel : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Enemy"))
+        if (collision.gameObject.CompareTag("Ground"))
         {
-            if (!isTakingDamage)
-            {
-                StartCoroutine(TakeDamageOverTime(1, 0.5f)); // Ќаносить 1 единицу урона каждую секунду
-            }
-
-            //if (Input.GetMouseButtonDown(0) && !isAttacking)
-            //{
-            //    isAttacking = true;
-            //    animator.SetBool("attack", true);
-            //    SkeletonBehavior enemyscript = enemy.GetComponent<SkeletonBehavior>();
-            //    enemyscript.TakeDamage(1);
-            //    StartCoroutine(AttackDelay());
-            //}
-        }
-    }
-
-    void OnCollisionExit2D(Collision2D collision)
-    {
-        if (collision.gameObject.CompareTag("Enemy"))
-        {
-            StopCoroutine(TakeDamageOverTime(1, 1f)); // ќстановить нанесение урона, когда герой уходит от противника
-            isTakingDamage = false;
-        }
-    }
-
-    IEnumerator TakeDamageOverTime(int damage, float delay)
-    {
-        isTakingDamage = true;
-        while (isTakingDamage)
-        {
-            TakeDamage(damage);
-            yield return new WaitForSeconds(delay);
-        }
-    }
-
-    public void TakeDamage(int damage)
-    {
-        currentHealth -= damage;
-
-        if (currentHealth <= 0)
-        {
-            // Play death animation
-            animator.SetTrigger("Death");
-
-            // Disable movement
-            GetComponent<Rigidbody2D>().isKinematic = true;
-
-            // Destroy player after a delay (optional)
-            StartCoroutine(DestroyPlayer(2f));
+            isGrounded = true;
         }
     }
 
@@ -141,9 +101,23 @@ public class ControllerHeropicsel : MonoBehaviour
         animator.SetBool("attack", false);
     }
 
-    IEnumerator DamageDelay()
+    public void TakeDamage(int damage)
     {
-        yield return new WaitForSeconds(damageDelay);
+        Debug.Log("TakeDamage called");
+        currentHealth -= damage;
+
+        if (currentHealth <= 0)
+        {
+            Debug.Log("Skeleton Damage received. Current health: " + currentHealth);
+            // Play death animation
+            animator.SetTrigger("Death");
+
+            // Disable movement
+            GetComponent<Rigidbody2D>().isKinematic = true;
+
+            // Destroy player after a delay (optional)
+            StartCoroutine(DestroyPlayer(2f));
+        }
     }
 
     IEnumerator DestroyPlayer(float delay) // Uncomment if you want to destroy the player

@@ -37,6 +37,19 @@ AnimationClip:
     classID: 212
     script: {fileID: 0}
     flags: 2
+  - serializedVersion: 2
+    curve:
+    - time: 0.125
+      value: {fileID: 0}
+    - time: 0.375
+      value: {fileID: 0}
+    - time: 0.625
+      value: {fileID: 0}
+    attribute: walkStepSound
+    path: 
+    classID: 114
+    script: {fileID: 11500000, guid: 85b21ad84b16b4249b6b3b058772a528, type: 3}
+    flags: 2
   m_SampleRate: 8
   m_WrapMode: 0
   m_Bounds:
@@ -53,6 +66,15 @@ AnimationClip:
       isPPtrCurve: 1
       isIntCurve: 0
       isSerializeReferenceCurve: 0
+    - serializedVersion: 2
+      path: 0
+      attribute: 1187606662
+      script: {fileID: 11500000, guid: 85b21ad84b16b4249b6b3b058772a528, type: 3}
+      typeID: 114
+      customType: 0
+      isPPtrCurve: 1
+      isIntCurve: 0
+      isSerializeReferenceCurve: 0
     pptrCurveMapping:
     - {fileID: 21300000, guid: 1ff3bb5d141c2204ea7a71ac5fed23ad, type: 3}
     - {fileID: 21300000, guid: d85184f0406735a42bd95467ea855be5, type: 3}
@@ -60,6 +82,9 @@ AnimationClip:
     - {fileID: 21300000, guid: 8e7b1255357589a4c8e5bc7df7e82b10, type: 3}
     - {fileID: 21300000, guid: 13f222e87a142f8429bdf50c087e22a6, type: 3}
     - {fileID: 21300000, guid: f023deb19dcb1e24fbad7047ef406f1f, type: 3}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}

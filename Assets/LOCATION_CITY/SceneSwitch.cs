@@ -6,10 +6,27 @@ using UnityEngine.Animations;
 public class TriggerShakeAndLoadScene : MonoBehaviour
 {
     public Animator animator; //Ссылка на Animator объекта "Затухание"
+    private bool isInsideTrigger = false; // Флаг для отслеживания нахождения внутри триггера
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Player")) // Предполагается, что у персонажа есть тег "Player"
+        {
+            isInsideTrigger = true;
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            isInsideTrigger = false;
+        }
+    }
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.E))
+        if (isInsideTrigger && Input.GetKeyDown(KeyCode.E))
         {
             //Запуск анимации FadeIn
             animator.SetTrigger("FadeIn");

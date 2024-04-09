@@ -16,7 +16,9 @@ public class ControllerHeropicsel : MonoBehaviour
 
     // Health variables
     [SerializeField] public int maxHealth = 5;
-    private int currentHealth;
+    public int currentHealth;
+
+    public HealthBar healthBar;
 
     // Attack variables
     private bool isAttacking = false;
@@ -30,6 +32,17 @@ public class ControllerHeropicsel : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
 
         currentHealth = maxHealth; // Initialize health
+        healthBar.SetMaxHealth(maxHealth);
+
+        if (gameObject.layer == LayerMask.NameToLayer("Player"))
+        {
+            Debug.Log("Герой находится на слое Player");
+        }
+        else
+        {
+            Debug.Log("Герой не на слое Player");
+        }
+
     }
 
     void Update()
@@ -103,8 +116,10 @@ public class ControllerHeropicsel : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
-        Debug.Log("TakeDamage called");
+        Debug.Log("TakeDamage called" + currentHealth);
         currentHealth -= damage;
+
+        healthBar.SetHealth(currentHealth);
 
         if (currentHealth <= 0)
         {

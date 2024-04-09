@@ -9,7 +9,7 @@ public class SkeletonBehavior : MonoBehaviour
     private Rigidbody2D rb;
     [SerializeField] private float moveSpeed = 3f;
     [SerializeField] private float attackRange = 10f;
-    [SerializeField] private float attackRadius = 10f;
+    [SerializeField] private float attackRadius = 200f;
     [SerializeField] private AudioClip attackSound;
     [SerializeField] public AudioClip deathSound;
     [SerializeField] private AudioClip walkStepSound;
@@ -41,21 +41,34 @@ public class SkeletonBehavior : MonoBehaviour
 
         if (distanceToPlayer <= attackRange)
         {
+            Debug.Log("called3");
             // Attack player
             animator.SetBool("attack", true);
             if (attackSoundCoroutine == null)
             {
                 attackSoundCoroutine = StartCoroutine(PlayAttackSound());
             }
-            Collider2D playerCollider = Physics2D.OverlapCircle(transform.position, attackRadius, LayerMask.GetMask("Player"));
-            if (playerCollider != null)
+
+            // Check for collision with player during attack
+            Collider2D[] playersHit = Physics2D.OverlapCircleAll(transform.position, attackRadius);
+            foreach (Collider2D playerCollider in playersHit)
             {
-                ApplyDamageToPlayer();
+                Debug.Log("called2");
+                //if (playerCollider.CompareTag("Player"))
+                //{
+                    Debug.Log("called1");
+                    ControllerHeropicsel playerScript = playerCollider.GetComponent<ControllerHeropicsel>();
+                    if (playerScript != null)
+                    {
+                        Debug.Log("called");
+                        playerScript.TakeDamage(1); // Deal damage to the player
+                    }
+                //}
             }
         }
         else
         {
-            // Конец атаки
+            // End of attack
             animator.SetBool("attack", false);
             if (attackSoundCoroutine != null)
             {
@@ -72,9 +85,10 @@ public class SkeletonBehavior : MonoBehaviour
             direction.Normalize();
             transform.position += direction * moveSpeed * Time.deltaTime;
             // Flip sprite based on direction
-            sprite.flipX = direction.x < 0.0f;
+            sprite.flipX = direction.x > 0.0f;
         }
     }
+
 
     private void ApplyDamageToPlayer()
     {

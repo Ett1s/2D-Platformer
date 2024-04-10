@@ -31,8 +31,15 @@ public class ControllerHeropicsel : MonoBehaviour
         sprite = GetComponentInChildren<SpriteRenderer>();
         rb = GetComponent<Rigidbody2D>();
 
-        currentHealth = maxHealth; // Initialize health
-        healthBar.SetMaxHealth(maxHealth);
+        if (PlayerPrefs.HasKey("PlayerHealth"))
+        {
+            currentHealth = PlayerPrefs.GetInt("PlayerHealth");
+        }
+        else
+        {
+            currentHealth = maxHealth; // Initialize health
+            healthBar.SetMaxHealth(maxHealth); // Используйте максимальное здоровье, если нет сохраненного
+        }
 
         if (gameObject.layer == LayerMask.NameToLayer("Player"))
         {
@@ -133,6 +140,20 @@ public class ControllerHeropicsel : MonoBehaviour
             // Destroy player after a delay (optional)
             StartCoroutine(DestroyPlayer(2f));
         }
+    }
+    public void SaveHealth()
+    {
+        PlayerPrefs.SetInt("PlayerHealth", currentHealth);
+        PlayerPrefs.Save();
+    }
+
+    public void RestoreHealth()
+    {
+        currentHealth = maxHealth;
+        healthBar.SetHealth(currentHealth);
+        // Сохраняем здоровье в PlayerPrefs, чтобы оно сохранялось между сценами
+        PlayerPrefs.SetInt("PlayerHealth", currentHealth);
+        PlayerPrefs.Save();
     }
 
     IEnumerator DestroyPlayer(float delay) // Uncomment if you want to destroy the player

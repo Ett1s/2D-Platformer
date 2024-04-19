@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.U2D;
 
@@ -12,7 +13,20 @@ public class ControllerHeropicsel : MonoBehaviour
     [SerializeField] private float runSpeed = 10f;
     [SerializeField] private float jumpForce = 7f;
     [SerializeField] private AudioClip attackSound;
+    [SerializeField] private AudioClip Death_Sount;
+    [SerializeField] private AudioClip Healh_Sound;
+    public GameObject pauseMenu;
+    public float pauseDelay = 2f;
     private bool isGrounded = false;
+    public TextMeshProUGUI textDisplay;
+    public float textSpeed;
+    public string[] texts; 
+    public bool HasTrigger = false;
+    private bool isHealthRestored = false;
+
+
+    private int currentIndex = -1;
+    private Coroutine currentCoroutine;
 
     // Health variables
     [SerializeField] public int maxHealth = 5;
@@ -88,7 +102,7 @@ public class ControllerHeropicsel : MonoBehaviour
 
             if (attackSound != null)
             {
-                AudioSource.PlayClipAtPoint(attackSound, transform.position); // Play the sound at the character's position
+                AudioSource.PlayClipAtPoint(attackSound, transform.position); 
             }
 
             // Check for collision with enemy during attack
@@ -100,7 +114,7 @@ public class ControllerHeropicsel : MonoBehaviour
                     SkeletonBehavior enemyScript = enemyCollider.GetComponent<SkeletonBehavior>();
                     if (enemyScript != null)
                     {
-                        enemyScript.TakeDamage(1); // Deal damage to the enemy
+                        enemyScript.TakeDamage(1); 
                     }
                 }
             }
@@ -132,6 +146,7 @@ public class ControllerHeropicsel : MonoBehaviour
         SaveHealth();
 
         healthBar.SetHealth(currentHealth);
+        isHealthRestored = false;
 
         if (currentHealth <= 0)
         {
@@ -142,8 +157,12 @@ public class ControllerHeropicsel : MonoBehaviour
             // Disable movement
             GetComponent<Rigidbody2D>().isKinematic = true;
 
+            AudioSource.PlayClipAtPoint(Death_Sount, transform.position);
+
+
             // Destroy player after a delay (optional)
             StartCoroutine(DestroyPlayer(2f));
+            StartCoroutine(PauseAndShowMenu());
 
             PlayerPrefs.SetInt("PlayerHealth", maxHealth);
             PlayerPrefs.Save();
@@ -158,9 +177,22 @@ public class ControllerHeropicsel : MonoBehaviour
 
     public void RestoreHealth()
     {
-        currentHealth = maxHealth;
-        healthBar.SetHealth(currentHealth);
-        SaveHealth();
+        if (currentHealth != maxHealth && !isHealthRestored)
+        {
+            AudioSource.PlayClipAtPoint(Healh_Sound, transform.position);
+            currentHealth = maxHealth;
+            healthBar.SetHealth(currentHealth);
+            SaveHealth();
+            isHealthRestored = true; // Устанавливаем флаг в true после восстановления здоровья
+        }
+        else if (currentHealth == maxHealth)
+        {
+            currentIndex = (currentIndex + 1) % texts.Length; // Переход к следующему тексту
+            if (currentCoroutine != null)
+                StopCoroutine(currentCoroutine); // Остановить предыдущую корутину, если она есть
+            currentCoroutine = StartCoroutine(ShowText(texts[currentIndex])); // Запуск новой корутины
+            HasTrigger = true;
+        }
     }
 
     IEnumerator DestroyPlayer(float delay) // Uncomment if you want to destroy the player
@@ -168,4 +200,28 @@ public class ControllerHeropicsel : MonoBehaviour
         yield return new WaitForSeconds(delay);
         Destroy(gameObject);
     }
+
+    IEnumerator PauseAndShowMenu()
+    {
+        yield return new WaitForSeconds(pauseDelay);
+
+        Time.timeScale = 0f;
+
+        pauseMenu.SetActive(true);
+    }
+
+    IEnumerator ShowText(string fullText)
+    {
+        textDisplay.text = ""; // Очистка текстового поля перед новым текстом
+        int i = 0;
+        while (i < fullText.Length)
+        {
+            textDisplay.text += fullText[i];
+            yield return new WaitForSeconds(textSpeed);
+            i++;
+        }
+        yield return new WaitForSeconds(2.0f); // Ждем 2 секунды
+        textDisplay.text = ""; // Очистка текстового поля после 2 секунд
+    }
+
 }

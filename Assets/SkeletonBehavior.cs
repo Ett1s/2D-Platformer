@@ -124,6 +124,29 @@ public class SkeletonBehavior : MonoBehaviour
             StartCoroutine(DestroyEnemy(2f));
         }
     }
+
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Trap")) // Предполагается, что у персонажа есть тег "Player"
+        {
+            animator.SetTrigger("Death");
+
+            // Play death sound
+            if (deathSound != null)
+            {
+                AudioSource.PlayClipAtPoint(deathSound, transform.position); // Play the sound at the character's position
+            }
+
+            // Disable movement and collision
+            rb.isKinematic = true;
+            GetComponent<Collider2D>().enabled = false;
+
+            // Destroy after a delay (optional)
+            StartCoroutine(DestroyEnemy(2f));
+        }
+    }
+
     public void PlayWalkStepSound()
     {
         if (walkStepSound != null)

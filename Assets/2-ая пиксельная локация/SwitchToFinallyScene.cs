@@ -7,6 +7,7 @@ public class SwitchToFinallyScene2 : MonoBehaviour
 {
     public Animator animator; //Ссылка на Animator объекта "Затухание"
     private bool isInsideTrigger = false; // Флаг для отслеживания нахождения внутри триггера
+    [SerializeField] private AudioClip door;
 
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -28,11 +29,12 @@ public class SwitchToFinallyScene2 : MonoBehaviour
     {
         if (isInsideTrigger && Input.GetKeyDown(KeyCode.E))
         {
+            AudioSource.PlayClipAtPoint(door, transform.position);
             //Запуск анимации FadeIn
             animator.SetTrigger("FadeIn");
 
             //Загрузка сцены через 2 секунды после начала анимации
-            StartCoroutine(LoadSceneAfterFadeIn(2f));
+            StartCoroutine(LoadSceneAfterFadeIn(4f));
         }
     }
 

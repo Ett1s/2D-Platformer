@@ -3,6 +3,7 @@ using UnityEngine;
 public class HealthRestorer : MonoBehaviour
 {
     private bool isPlayerInTrigger = false;
+    
 
     void OnTriggerEnter2D(Collider2D other)
     {

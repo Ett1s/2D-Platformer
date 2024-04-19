@@ -6,7 +6,8 @@ using UnityEngine.Animations;
 public class TriggerShakeAndLoadScene : MonoBehaviour
 {
     public Animator animator; //Ссылка на Animator объекта "Затухание"
-    private bool isInsideTrigger = false; // Флаг для отслеживания нахождения внутри триггера
+    private bool isInsideTrigger = false;
+    [SerializeField] private AudioClip door;
 
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -28,6 +29,7 @@ public class TriggerShakeAndLoadScene : MonoBehaviour
     {
         if (isInsideTrigger && Input.GetKeyDown(KeyCode.E))
         {
+            AudioSource.PlayClipAtPoint(door, transform.position);
             //Запуск анимации FadeIn
             animator.SetTrigger("FadeIn");
 

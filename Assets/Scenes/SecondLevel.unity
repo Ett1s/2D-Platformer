@@ -1654,7 +1654,7 @@ GameObject:
   - component: {fileID: 94351459}
   m_Layer: 0
   m_Name: Floor1 (42)
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2243,7 +2243,7 @@ GameObject:
   - component: {fileID: 119975128}
   m_Layer: 0
   m_Name: Floor1 (39)
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -11128,6 +11128,7 @@ GameObject:
   - component: {fileID: 422308836}
   - component: {fileID: 422308838}
   - component: {fileID: 422308835}
+  - component: {fileID: 422308839}
   m_Layer: 0
   m_Name: "\u041F\u0435\u0440\u0435\u0445\u043E\u0434 \u0432 \u043B\u0435\u0441"
   m_TagString: Untagged
@@ -11221,6 +11222,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 1345629646}
+  door: {fileID: 8300000, guid: f519d8c3232be0b4eb886e85773243a3, type: 3}
+--- !u!114 &422308839
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 422308833}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 177ad0c0b0e343549916996a6e853713, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &432317477
 GameObject:
   m_ObjectHideFlags: 0
@@ -29460,7 +29474,7 @@ GameObject:
   - component: {fileID: 1159007054}
   m_Layer: 0
   m_Name: Ground (12)
-  m_TagString: Ground
+  m_TagString: Trap
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -45686,7 +45700,7 @@ GameObject:
   - component: {fileID: 1859041828}
   m_Layer: 0
   m_Name: Floor1 (38)
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -45815,6 +45829,7 @@ GameObject:
   - component: {fileID: 1864996662}
   - component: {fileID: 1864996661}
   - component: {fileID: 1864996664}
+  - component: {fileID: 1864996665}
   m_Layer: 0
   m_Name: "\u041F\u0435\u0440\u0435\u0445\u043E\u0434"
   m_TagString: Untagged
@@ -45835,6 +45850,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 1345629646}
+  door: {fileID: 8300000, guid: 1f2d4101bd5eed24aa209561c4b80101, type: 3}
 --- !u!61 &1864996662
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -45909,6 +45925,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   message: "[E] - \u0417\u0430\u0439\u0442\u0438 \u0432 \u0434\u0432\u0435\u0440\u043D\u043E\u0439
     \u043F\u0440\u043E\u0435\u043C"
+--- !u!114 &1864996665
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1864996660}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 177ad0c0b0e343549916996a6e853713, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1865843475
 GameObject:
   m_ObjectHideFlags: 0
@@ -48826,6 +48854,14 @@ MonoBehaviour:
   runSpeed: 10
   jumpForce: 7
   attackSound: {fileID: 8300000, guid: 821a4c6927688184a81c3e63e705fb6e, type: 3}
+  Death_Sount: {fileID: 8300000, guid: 49437acce02fc584594b40e6900745c9, type: 3}
+  Healh_Sound: {fileID: 0}
+  pauseMenu: {fileID: 66476432}
+  pauseDelay: 2
+  textDisplay: {fileID: 0}
+  textSpeed: 0
+  texts: []
+  HasTrigger: 0
   maxHealth: 1500
   currentHealth: 0
   healthBar: {fileID: 2127797229}

@@ -3548,6 +3548,14 @@ MonoBehaviour:
   runSpeed: 4
   jumpForce: 4
   attackSound: {fileID: 8300000, guid: 821a4c6927688184a81c3e63e705fb6e, type: 3}
+  Death_Sount: {fileID: 0}
+  Healh_Sound: {fileID: 0}
+  pauseMenu: {fileID: 0}
+  pauseDelay: 2
+  textDisplay: {fileID: 0}
+  textSpeed: 0
+  texts: []
+  HasTrigger: 0
   maxHealth: 1000
   currentHealth: 0
   healthBar: {fileID: 0}
